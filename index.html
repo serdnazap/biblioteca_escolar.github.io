@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Biblioteca escolar</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="js/biblioteca.js" defer></script>
+    <script src="js/archivos.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <header class="cabecera">
+        <div class="contenedor barra">
+            <a class="marca" href="./index.html">Biblioteca escolar</a>
+            <div class="acciones-archivo" aria-label="Respaldos">
+                <button id="exportar" type="button">Descargar JSON</button>
+                <button id="importar" type="button">Cargar JSON</button>
+                <input id="archivo-json" type="file" accept=".json,application/json" hidden>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <div class="encabezado">
+            <div>
+                <h1>Catálogo</h1>
+                <p>Consulta los ejemplares y registra sus préstamos.</p>
+            </div>
+            <button class="primario" id="agregar" type="button">Registrar libro</button>
+        </div>
+
+        <dl class="resumen" aria-label="Estado del catálogo">
+            <div><dt>Ejemplares</dt><dd id="total">0</dd></div>
+            <div><dt>Disponibles</dt><dd id="total-disponibles">0</dd></div>
+            <div><dt>Prestados</dt><dd id="total-prestados">0</dd></div>
+        </dl>
+
+        <p id="aviso" class="aviso" role="status" aria-live="polite" hidden></p>
+
+        <section class="catalogo" aria-label="Listado de ejemplares">
+            <div class="herramientas">
+                <div class="filtros" id="filtros" role="group" aria-label="Filtrar por estado">
+                    <button type="button" data-estado="todos" aria-pressed="true">Todos</button>
+                    <button type="button" data-estado="disponibles" aria-pressed="false">Disponibles</button>
+                    <button type="button" data-estado="prestados" aria-pressed="false">Prestados</button>
+                </div>
+                <label class="busqueda">
+                    <span class="visualmente-oculto">Buscar por título o autor</span>
+                    <input id="busqueda" type="search" placeholder="Buscar por título o autor" autocomplete="off">
+                </label>
+            </div>
+            <p id="vacio" class="vacio">Aún no hay libros registrados.</p>
+            <div id="tabla" class="tabla-contenedor" hidden>
+                <table>
+                    <caption class="visualmente-oculto">Ejemplares del catálogo</caption>
+                    <thead>
+                        <tr><th scope="col">ID</th><th scope="col">Libro y autor</th><th scope="col">Estado</th><th scope="col">Acción</th></tr>
+                    </thead>
+                    <tbody id="filas"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="dialogo-libro" aria-labelledby="titulo-dialogo-libro">
+        <form id="formulario-libro">
+            <h2 id="titulo-dialogo-libro">Registrar libro</h2>
+            <label for="titulo">Título</label>
+            <input id="titulo" required maxlength="120" autofocus>
+            <label for="autor">Autor</label>
+            <input id="autor" required maxlength="120">
+            <p class="error-formulario" id="error-libro" role="alert" hidden></p>
+            <div class="acciones-dialogo">
+                <button type="button" data-cerrar>Cancelar</button>
+                <button class="primario" type="submit">Guardar libro</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dialogo-prestamo" aria-labelledby="titulo-dialogo-prestamo">
+        <form id="formulario-prestamo">
+            <h2 id="titulo-dialogo-prestamo">Registrar préstamo</h2>
+            <p id="libro-prestamo" class="detalle-dialogo"></p>
+            <label for="lector">Nombre del lector</label>
+            <input id="lector" required maxlength="120" autofocus>
+            <p class="error-formulario" id="error-prestamo" role="alert" hidden></p>
+            <div class="acciones-dialogo">
+                <button type="button" data-cerrar>Cancelar</button>
+                <button class="primario" type="submit">Guardar préstamo</button>
+            </div>
+        </form>
+    </dialog>
+</body>
+</html>
